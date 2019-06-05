@@ -1,0 +1,26 @@
+From bb208e7eec5cfd3b6de0d8288ec0f52442e256c9 Mon Sep 17 00:00:00 2001
+From: John Wang <wangzqbj@inspur.com>
+Date: Mon, 3 Jun 2019 17:51:22 +0800
+Subject: [PATCH] debug for ir35221
+
+Signed-off-by: John Wang <wangzqbj@inspur.com>
+---
+ drivers/hwmon/pmbus/ir35221.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/hwmon/pmbus/ir35221.c b/drivers/hwmon/pmbus/ir35221.c
+index 977315b..a5f4155 100644
+--- a/drivers/hwmon/pmbus/ir35221.c
++++ b/drivers/hwmon/pmbus/ir35221.c
+@@ -85,6 +85,8 @@ static int ir35221_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 	if (ret != 2 || strncmp(buf, "RI", strlen("RI"))) {
++		buf[5] = 0;
++		dev_err(&client->dev, "%s\n",buf);
+ 		dev_err(&client->dev, "MFR_ID unrecognised\n");
+ 		return -ENODEV;
+ 	}
+-- 
+2.7.4
+
