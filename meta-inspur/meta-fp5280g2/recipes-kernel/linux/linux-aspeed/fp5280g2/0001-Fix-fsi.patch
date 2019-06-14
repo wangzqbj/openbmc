@@ -1,0 +1,30 @@
+From 19a5afaa7c91f3722826e5f8ad2d61f965ad5424 Mon Sep 17 00:00:00 2001
+From: John Wang <wangzqbj@inspur.com>
+Date: Thu, 13 Jun 2019 15:36:37 +0800
+Subject: [PATCH] Fix fsi
+
+Signed-off-by: John Wang <wangzqbj@inspur.com>
+---
+ drivers/fsi/fsi-core.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+index 2c31563..81b5f0e 100644
+--- a/drivers/fsi/fsi-core.c
++++ b/drivers/fsi/fsi-core.c
+@@ -1053,11 +1053,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 
+ 	rc = fsi_slave_set_smode(slave);
+ 	if (rc) {
+-		dev_warn(&master->dev,
+-				"can't set smode on slave:%02x:%02x %d\n",
+-				link, id, rc);
+-		kfree(slave);
+-		return -ENODEV;
++		goto err_free;
+ 	}
+ 	if (master->link_config)
+ 		master->link_config(master, link,
+-- 
+2.7.4
+
