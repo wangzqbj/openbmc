@@ -1,0 +1,9 @@
+[Unit]
+Description=Inspur NCSI Card Check
+After=mapper-wait@-inspur-ncsi-manager.service
+
+[Service]
+ExecStart=inspur-ncsi-card-check.sh
+
+[Install]
+WantedBy=multi-user.target
